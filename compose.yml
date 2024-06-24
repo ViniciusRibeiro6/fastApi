@@ -3,3 +3,8 @@ services:
     ports: 
     - "8000:8000"
     build: .
+    develop:
+      watch:
+        - action: sync
+          path: ./source
+          target: ./diretorio
