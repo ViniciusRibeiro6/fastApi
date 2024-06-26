@@ -1,7 +1,7 @@
 import sys
 import os
 
-def larie(caminho: str):
+def removeLastPath(caminho: str):
 
   escape = '\\'
 
@@ -11,13 +11,11 @@ def larie(caminho: str):
 
   return caminho
 
-# seila = os.path.abspath(__file__).split('\\')
-seila = larie(os.path.abspath(__file__))
-seila = larie(seila)
-sys.path.append(seila)
-print(seila)
+correctPath = removeLastPath(os.path.abspath(__file__))
+correctPath = removeLastPath(correctPath)
+sys.path.append(correctPath)
 
-from models.PessoaModel import Pessoa, getPersonByIndex
+from source.models.PessoaModel import Pessoa, getPersonByIndex
 from typing import List
 
 Pessoas: List[Pessoa] = list([
@@ -35,10 +33,3 @@ def getPessoasSize():
 def test_pessoaSize():
   result = getPessoasSize()
   assert result == 3
-
-# def test_answer():
-#   print('alooo', getPessoasSize())
-#   assert func(3) == 5
-
-
-
