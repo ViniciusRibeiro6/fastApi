@@ -1,4 +1,5 @@
 # fastApi
+Necessário docker instalado
 
 Run `docker-compose up --watch`
 
