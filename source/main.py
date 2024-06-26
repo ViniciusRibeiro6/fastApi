@@ -15,8 +15,6 @@ class Pessoa:
   def _get(self):
     return { "cpf": self.cpf, "name": self.name, "birthdate": self.birthdate }
 
-
-
 Pessoas: List[Pessoa] = list([
   Pessoa("123", "benedito", "45"),
   Pessoa("321", "Jerlinda", "41"),
@@ -38,7 +36,7 @@ def find(array, fn):
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World!"}
+  return { "message": "System is working" }
 
 @app.post("/pessoa")
 async def createPessoa(cpf: str, name: str, birthdate: str):
@@ -62,7 +60,6 @@ def search(search: Union[str, None] = None, value: Union[str, None] = None):
   if not isinstance(value, str) and not isinstance(value, int):
     return {"message": "Parâmetro de busca inválido!", "invalid": { "value": value }}
 
-
   def finder(el, comp=value):
     currentElement = el._get()
 
@@ -78,7 +75,6 @@ def search(search: Union[str, None] = None, value: Union[str, None] = None):
     return { "message": "Pessoa encontrada com sucesso", "data": pessoa }
   
   return { "message": "Pessoa não cadastrada"}
-
 
 @app.get("/pessoa/{id}")
 def withParams(id: int):
