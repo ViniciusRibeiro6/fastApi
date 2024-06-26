@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-from typing import Union
-from typing import List
+from typing import Union, List
 from lib.helpers import find
 from models.PessoaModel import Pessoa, getPersonByIndex
 

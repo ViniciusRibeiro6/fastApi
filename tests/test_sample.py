@@ -50,3 +50,10 @@ def test_find_pessoa_by_cpf():
   pessoa = find(Pessoas, finder)
 
   assert pessoa.name == "Jerlinda"
+
+def test_zero_division():
+  with pytest.raises(ZeroDivisionError) as excinfo:
+    1 / 0
+
+  print(excinfo.value)
+  assert excinfo.value != "test"
