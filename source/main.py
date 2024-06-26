@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from typing import Union
-from pydantic import BaseModel
 from typing import List
+from lib.helpers import find
 
 app = FastAPI()
 
@@ -26,13 +26,6 @@ def getPersonByIndex(array: List[Pessoa], index: int) -> Union[Pessoa, None]:
     return array[index]
   except: return None
 
-def find(array, fn):
-  for elem in array:
-    result = fn(elem)
-    if result == True:
-      return elem
-    
-  return None
 
 @app.get("/")
 async def root():
