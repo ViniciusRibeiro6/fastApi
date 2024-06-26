@@ -15,7 +15,8 @@ correctPath = removeLastPath(os.path.abspath(__file__))
 correctPath = removeLastPath(correctPath)
 sys.path.append(correctPath)
 
-from source.models.PessoaModel import Pessoa, getPersonByIndex
+from source.models.PessoaModel import Pessoa
+from source.lib.helpers import find
 from typing import List
 
 Pessoas: List[Pessoa] = list([
@@ -30,6 +31,22 @@ def func(x):
 def getPessoasSize(): 
   return len(Pessoas)
 
-def test_pessoaSize():
-  result = getPessoasSize()
-  assert result == 3
+def test_pessoa_size_init():
+  assert getPessoasSize() == 3
+
+def test_add_pessoa():
+  Pessoas.append(Pessoa("654", "Flirovaldo", "1910-05-01"))
+  assert getPessoasSize() == 4
+
+def test_find_pessoa_by_cpf():
+
+  def finder(el, cpf="321"):
+    currentElement = el._get()
+
+    currentValue = currentElement.get("cpf")
+
+    return currentValue == cpf
+  
+  pessoa = find(Pessoas, finder)
+
+  assert pessoa.name == "Jerlinda"
