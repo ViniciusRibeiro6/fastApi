@@ -1,3 +1,3 @@
 import subprocess
 
-subprocess.run(["docker-compose", "up", "--build"]) 
+subprocess.run(["docker-compose", "up", "--watch"]) 

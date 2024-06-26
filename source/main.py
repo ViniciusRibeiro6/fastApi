@@ -2,18 +2,9 @@ from fastapi import FastAPI
 from typing import Union
 from typing import List
 from lib.helpers import find
+from models.PessoaModel import Pessoa, getPersonByIndex
 
 app = FastAPI()
-
-class Pessoa:
-
-  def __init__(self, cpf, name, birthdate):
-    self.cpf = cpf
-    self.name = name
-    self.birthdate = birthdate
-  
-  def _get(self):
-    return { "cpf": self.cpf, "name": self.name, "birthdate": self.birthdate }
 
 Pessoas: List[Pessoa] = list([
   Pessoa("123", "benedito", "45"),
@@ -21,11 +12,7 @@ Pessoas: List[Pessoa] = list([
   Pessoa("111", "Tchanco", "48"),
 ])
 
-def getPersonByIndex(array: List[Pessoa], index: int) -> Union[Pessoa, None]:
-  try:
-    return array[index]
-  except: return None
-
+notfoundReturn = { "message": Pessoa.messages["notRegistred"]}
 
 @app.get("/")
 async def root():
@@ -67,7 +54,7 @@ def search(search: Union[str, None] = None, value: Union[str, None] = None):
   if pessoa != None:
     return { "message": "Pessoa encontrada com sucesso", "data": pessoa }
   
-  return { "message": "Pessoa não cadastrada"}
+  return notfoundReturn
 
 @app.get("/pessoa/{id}")
 def withParams(id: int):
@@ -75,7 +62,7 @@ def withParams(id: int):
   pessoa = getPersonByIndex(Pessoas, id)
 
   if pessoa == None:
-    return { "message": "Pessoa não cadastrada" }
+    return notfoundReturn
   return { "message": "Pessoa encontrada com sucesso", "data": pessoa }
 
 @app.patch("/pessoa/{id}")
@@ -83,7 +70,7 @@ async def withParams(id: int, cpf: Union[str, None] = None, name: Union[str, Non
   pessoa = getPersonByIndex(Pessoas, id)
 
   if pessoa == None:
-    return { "message": "Pessoa não cadastrada" }
+    return notfoundReturn
 
   if cpf != None:
     Pessoas[id].cpf = cpf
@@ -102,7 +89,7 @@ async def createPessoa(id: int, cpf: str, name: str, birthdate: str):
   pessoa = getPersonByIndex(Pessoas, id)
 
   if pessoa == None:
-    return { "message": "Pessoa não cadastrada" }
+    return notfoundReturn
 
   Pessoas[id] = Pessoa(cpf, name, birthdate)
 
@@ -113,7 +100,7 @@ def removePessoa(id: int):
   pessoa = getPersonByIndex(Pessoas, id)
 
   if pessoa == None:
-    return { "message": "Pessoa não cadastrada"}
+    return notfoundReturn
 
   Pessoas.pop(id)
   
